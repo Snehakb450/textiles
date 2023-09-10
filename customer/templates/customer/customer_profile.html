@@ -1,0 +1,93 @@
+{% extends "customer/customer_master.html" %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static '/css/master.css'}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+<script src="{% static '/js/profile.js' %}"></script>
+<div class="container-fluid login-container">
+
+    <br><br><br>
+    <form action="{% url 'customer:edit_profile' data.id %}" method="post">
+    <div class="row">
+
+        <div class="col-sm-12"> 
+
+            <table class="table table-striped" id="customer_profile">
+
+                <tr>
+                    <th>Name</th>
+
+
+
+                    <td>{{ data.customer_name }}</td>
+                </tr>
+
+                <tr>
+
+                    <th>Gender</th>
+
+                    <td>{{ data.customer_gender }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Date of birth</th>
+
+                    <td>{{ data.customer_dob }}</td>
+
+                </tr>
+                <tr>
+
+
+                    <th>Mobile</th>
+
+                    <td>{{ data.customer_mobile }}</td>
+                </tr>
+
+
+
+                <tr>
+
+                    <th>Email</th>
+
+                    <td>{{ data.customer_email }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Address</th>
+
+                    <td>{{ data.customer_address }}</td>
+
+                </tr>
+
+                
+
+            </table>
+        </div>
+
+    </div>
+    <div class="text-center col-12">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <a href="{% url 'customer:edit_profile' data.id %}" style="color: white;">Edit profile</a></button>
+
+    </div>
+
+    <div class="text-right" style="margin-left: 90%;">
+
+        <a href="{% url 'customer:customer_home' %}">Go to Home</a>
+
+    </div>
+
+</div>
+
+</form>
+
+
+{% endblock %}

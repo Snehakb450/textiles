@@ -1,0 +1,111 @@
+{% extends "seller/seller_master.html" %} {% load static %} {% block content %}
+
+<script src="{% static '/js/added_product.js' %}"></script>
+
+<div class="py-5 text-left">
+
+    <h2>Edit product</h2>
+</div>
+<div class="row" style="width: 1200px;margin-left: 250px;">
+
+    <div class="col-md-8 order-md-1">
+
+        <form id="edit_product" method="post" enctype="multipart/form-data"> 
+            {% csrf_token %} 
+           
+
+            <div class="mb-3">                
+                    <input type="text" class="form-control" id="title" placeholder="Title of the product" name="title" value="{{data.title}}" required>
+
+            </div>
+            <div class="mb-3">
+
+                    <input type="text" class="form-control" id="regproductid" name="regproductid" placeholder="Registered product id" 
+                    value="{{data.reg_productid}}" required>
+
+            </div>
+
+            <div class="mb-3">
+
+                    <textarea class="form-control" id="description" name="description"  required>{{data.description}}</textarea>
+
+            </div>
+           
+
+            <div class="mb-3">
+
+                    <input type="number" class="form-control" id="price" name="price" placeholder=" ₹ 0.0" value="{{data.price}}" required>
+
+
+            </div>
+            <div class="mb-3">
+
+                    <input type="number" class="form-control" name="quantity" id="quantity" value="{{data.quantity}}" placeholder="Available quantity" required>
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-6">
+                        <input type="number" class="form-control" name="weight" id="weight" value="{{data.weight}}" placeholder="0.0" required>
+  
+                </div>
+                <div class="col-md-3 mb-3">
+
+                    <select class="custom-select d-block w-100 form-control" name="weightunit" id="weightunit"  required> 
+                        <option value=""  disabled selected>Choose</option>
+
+                        <option>kg</option>
+
+                        <option>g</option>
+
+                        <option>b</option>
+
+                        <option>oz</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-6">
+
+                        <input type="text" class="form-control" name="brand" id="brand" value="{{data.brand}}" placeholder="ex: Nike" required>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <select class="custom-select d-block w-100" name="status" id="status" required>
+
+                        <option value="">Choose</option>
+
+                        <option>Active</option>
+
+                        <option>Draft</option>
+
+                    </select>
+                    
+
+                </div>
+
+            </div>
+<br><br>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary" style="width: 800px;">Save changes</button>
+                
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %} 
+

@@ -1,0 +1,78 @@
+{% extends "customer/customer_master.html" %} {% load static %} {% block content %}
+
+<h3 style="margin-left: 5%;">Change password</h3>
+            <br>
+            <center>
+                <div class="table-responsive" style="width: 700px;">
+                    <table >
+                <form method="post" name="form9" id="form9" style="width: 800px;margin-left: 25%;">
+                    {% csrf_token %}  
+                    <br>
+                    <div class="row mb-3 ">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Current password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="pwd9" name="pwd9" >
+                        </div>
+                        <div id="pwderror" style="color: red;text-align: right;"></div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">New password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="pwd10" name="pwd10" >
+                        </div>
+                        <div id="pwerror" style="color: red;text-align: right;"></div>
+                        <div id="perror" style="color: red;text-align: right;"></div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm new password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="cpwd8" >
+                        </div>
+                        
+                    </div>
+        
+                    <center><button type="submit" class="btn" style="background-color: #ad91b4;">Change</button></center>
+                </form>
+                    </table><br><br><br><br><br>
+                </div>
+                </center>
+
+
+                <script>
+                    document.getElementById("form9").addEventListener("submit", function (event) {
+                        p1status=0
+                        p2status=0
+                        current_pwd = document.getElementById("pwd9").value
+                        newpassword = document.getElementById("pwd10").value
+                        cpassword = document.getElementById("cpwd8").value
+                        
+                        if(current_pwd==''){
+                            p1status=0
+                            document.getElementById("pwderror").innerHTML="Please enter your current password"
+                            event.preventDefault()
+            
+                        }
+            
+                        if (newpassword== "") {
+                            p2status = 0;
+                            document.getElementById("pwerror").innerHTML = "Please enter new password"
+                            event.preventDefault()
+            
+                        }
+                        if (newpassword != cpassword) {
+            
+                            p2status = 0;
+            
+                            document.getElementById("perror").innerHTML = "password and confirm password mismatch"
+                            event.preventDefault()
+                            
+                        } 
+            
+                        if (p1status == 0 || p2status==0) {
+            
+                            return false;
+            
+                        }
+                    })
+                </script>
+{% endblock %}

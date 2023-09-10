@@ -1,0 +1,94 @@
+{% extends "customer/customer_master.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+
+    <div class="row" style="min-height: 300px;">
+
+        <h2>My cart</h2>
+
+        <table class="table table-striped">
+
+            
+            <tbody>
+                {% for order in bagdata %}
+                <tr>
+                    {% for product in productdata %}
+                    {% if order.product_id_id == product.id %}
+
+                    <td><img src="/media/{{ product.img }}" alt="" srcset="" height="100px" width="100px"></td>
+
+                    <td >{{ product.title}}</td>
+
+                    <td>
+                        <input type="number" name="quantity"
+                            onchange="update_quantity(this, '{{order.id}}', '{{product.price}}', 'price{{ forloop.parentloop.counter }}')"
+                            value="{{ order.quantity }}" min="1" max="99" style="width: 40px;">
+                    </td>
+
+                    <td>
+                        <span>&#8377;</span>
+                        <input type="number" id="price{{ forloop.parentloop.counter }}" value="{{ product.price }}"
+                            min="1" readonly>
+                    </td>
+                    <td><a href="{% url 'customer:remove' product.id %}" class="btn btn-primary">Remove</a></td> 
+
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+                <!-- Move this row outside the for loop -->
+                <tr>
+                    <td></td>
+                    <td><b>Total amount</b></td>
+                    <td></td>
+                    <!-- Use a <span> instead of <input> for displaying the total amount -->
+                    <td>
+                        <span id="totalAmount">&#8377; 0</span>
+                    </td>
+                   
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button id="rzp-buttonl" class="btn btn-success btn-lg float-right" onclick="pay()"
+            style="width: 150px;height:50px">Checkout</button>
+    </div>
+
+</div>
+<br>
+
+<script>
+    // Function to update the total amount
+    function updateTotalAmount() {
+        var totalAmount = 0;
+        var priceInputs = document.querySelectorAll('input[id^="price"]');
+        priceInputs.forEach(function (input) {
+            var productPrice = parseFloat(input.value);
+            var quantity = parseInt(input.parentElement.parentElement.querySelector('input[name="quantity"]').value);
+            totalAmount += productPrice * quantity;
+        });
+        document.getElementById('totalAmount').textContent = ' Rs. ' + totalAmount;
+    }
+
+    // Function to update the quantity and total price for a specific product
+    function update_quantity(element, orderId, productPrice, totalPriceFieldId) {
+        var quantity = element.value;
+        var total = parseInt(quantity) * parseFloat(productPrice);
+
+        // Update the total price in the span
+        document.getElementById(totalPriceFieldId).textContent = 'Total Price: Rs. ' + total;
+
+        // Update the total amount
+        updateTotalAmount();
+    }
+
+    // Call updateTotalAmount on page load to set the initial total amount
+    window.onload = updateTotalAmount;
+</script>
+
+
+{% endblock %}

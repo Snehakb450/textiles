@@ -1,0 +1,108 @@
+{% extends "superadmin/admin_master.html" %} {% load static %} {% block content %}
+
+<br>
+
+<h3>Approve Resellers</h3>
+
+<table class="table table-bordered" id="request_table">
+
+    <thead>
+
+        <tr>
+
+            <th scope="col">Company Name & ID</th>
+
+            <th scope="col">Email</th>
+
+            <th scope="col">Address</th>
+
+            <th scope="col">Mobile</th>
+
+            <th scope="col">Bank Details <br> Holder Name <br> Acc No <br>IFSC</th>
+
+           
+
+            <th></th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+
+        {% for req in userrequests %}
+
+        <tr>
+
+            <td>
+                {{req.resel_company_name }} <br>{{ req.resel_company_id }}
+            </td>
+            <td>{{ req.resel_email}}</td>
+            <td>
+
+                {{ req.resel_address }}
+
+            </td>
+
+            <td>{{ req.resel_mobile }}</td>
+            <td>
+
+                {{req.resel_accountholder_name }} <br>{{ req.resel_account_number }} <br>
+
+                {{ req.resel_ifsc_number }}</td>
+
+           
+
+                <td id="approve-{{ req.id }}"> 
+                    <button class="btn btn-link text-success approve-btn" 
+                    data-admin-id="{{ req.id }}" style="color: green;">{{req.rstatus}}</button> 
+                </td>
+                <td>
+                    <button class="btn btn-link text-danger">
+                        <a href="{% url 'superadmin:deleteseller' req.id %}" style="color: rgb(151, 25, 46)!important;">Decline/Delete</a></button>
+                  </td>
+
+        </tr>
+
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<br>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // Function to handle the "Approve" button click
+                    $(document).on('click', '.approve-btn', function () {
+                        var approveBtn = $(this); // Get the clicked button element
+                        var adminId = approveBtn.data('admin-id'); // Get the admin ID from the data attribute
+
+                        // Send the AJAX request to update the admin status
+                        $.ajax({
+                            url: '{% url "superadmin:update_seller_status" %}',
+                            type: 'POST',
+                            data: {
+                                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                'adminId': adminId,
+                                'status': 'active', // Update this value to the desired status
+                            },
+                            success: function (response) {
+                                // Update the cell content on successful response
+                                if (response.success) {
+                                    // Update the content of the cell containing the approve button
+                                    $('#approve-' + adminId).text('active');
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle errors if needed
+                                console.error(error);
+                            }
+                        });
+                    });
+                });
+            </script>
+
+
+{% endblock %}
+

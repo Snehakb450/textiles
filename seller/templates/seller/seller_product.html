@@ -1,0 +1,58 @@
+{% extends "seller/seller_master.html" %} {% load static %} {% block content %}
+
+
+<nav class="navbar navbar-expand-ig navbar-dark bg-light">
+
+    <div class="container">
+
+        <a class="navbar-brand text-dark font-weight-bold" href="#">Products</a>
+        <div class="collapse navbar-collapse" id="navbarResponsive"> </div>
+
+        
+    </div>
+
+</nav>
+
+
+
+
+<div class="row text-center" style="padding-top: 26pt;">
+
+    {% for product in products %}
+
+    <div class="col-lg-3 col-md-6 mb-4" >
+
+        <div class="card h-100">
+
+            <img class="card-img-top" src="/media/{{ product.img }}"  >
+        <div class="card-body">
+
+            <h4 class="card-title">{{product.title}}</h4>
+            <h6>{{product.quantity}} in stock</h6>
+
+            <h6>Status: {{product.status}}</h6>
+
+            <h6>Vendor: {{product.brand}}</h6>
+
+        </div>
+
+        <div class="card-footer">
+
+            <a class="btn btn-primary" id="edit" href="{% url 'seller:edit_product' product.id %}">Edit</a>
+
+            <button  class="btn btn-danger"><a href="{% url 'seller:delete_product' product.id %}">Delete</a></button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+
+{% endblock %}
+

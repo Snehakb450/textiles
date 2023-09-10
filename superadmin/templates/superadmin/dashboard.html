@@ -1,0 +1,24 @@
+{% extends "superadmin/admin_master.html" %} {% load static %} {% block content %}
+
+<div class="row container" style="text-align: center;">
+    
+    <div class="col-5" style="background-color: #b19fb4;">
+        <br>
+        Customer <br><br><br>
+        No of customers: {{customers}} <br>
+        {% for i in customer %}
+        {{i.customer_name}}
+        {% endfor %}
+        <br><br>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-5" style="background-color: #b19fb4;"> <br>
+        Seller <br><br><br>
+        No of sellers:{{sellers}} <br>
+        
+        <br><br>
+    </div>
+
+</div>
+
+{% endblock %}
